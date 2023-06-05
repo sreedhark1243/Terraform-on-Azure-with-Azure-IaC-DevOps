@@ -34,7 +34,7 @@ stages:
     - task: tfsec@1
       inputs:
         version: 'v1.26.0'
-        debug: true
-        publishTestResults: false
+        debug: false
+        publishTestResults: true
         args: 'continueOnError: true'
         dir: '$(System.DefaultWorkingDirectory)/terraform-manifests'
