@@ -36,5 +36,5 @@ stages:
         version: 'v1.26.0'
         debug: false
         publishTestResults: true
-        args: 'continueOnError: true'
+#        args: 'continueOnError: true'
         dir: '$(System.DefaultWorkingDirectory)/terraform-manifests'
