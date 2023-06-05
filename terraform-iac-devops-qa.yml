@@ -31,10 +31,35 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'terraform-manifests'
         publishLocation: 'Container'
-    - task: tfsec@1
+    - task: Bash@3
       inputs:
-        version: 'v1.26.0'
-        debug: false
-        publishTestResults: true
-#        args: 'continueOnError: true'
-        dir: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+       targetType: 'inline'
+       script: |
+        mkdir TFSecReport
+        docker pull tfsec/tfsec:latest
+        docker run --rm -v "$(pwd):/src" tfsec/tfsec ./src --format JUnit --include-passed > TFSecReport/TFSec-Report.xml
+        docker run --rm -v "$(pwd):/src" tfsec/tfsec ./src
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+      displayName: TFSec Static Code Analysis
+      condition: always()
+      continueOnError: true
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: TFSec Report'
+      condition: succeededOrFailed()
+      inputs:
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/TFSecReport'
+        ArtifactName: TFSecReport
+ # Publish the results of the TFSec analysis as Test Results to the pipeline
+    - task: PublishTestResults@2
+      displayName: Publish TFSecReport Test Results
+      condition: succeededOrFailed()
+      inputs:
+        testResultsFormat: 'JUnit' # Options JUnit, NUnit, VSTest, xUnit, cTest
+        testResultsFiles: '**/*TFSec-Report.xml'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        searchFolder: '$(Build.ArtifactStagingDirectory)/TFSecReport'
+        testRunTitle: TFSec Scan
+        mergeTestResults: false
+        failTaskOnFailedTests: false
+        publishRunAttachments: true
