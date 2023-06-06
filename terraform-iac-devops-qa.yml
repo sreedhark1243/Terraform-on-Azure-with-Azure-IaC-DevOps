@@ -48,7 +48,7 @@ stages:
       condition: succeededOrFailed()
       inputs:
         workingDirectory: "$(System.DefaultWorkingDirectory)"
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/TFSecReport'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: TFSecReport
  # Publish the results of the TFSec analysis as Test Results to the pipeline
     - task: PublishTestResults@2
@@ -58,7 +58,7 @@ stages:
         testResultsFormat: 'JUnit' # Options JUnit, NUnit, VSTest, xUnit, cTest
         testResultsFiles: '**/*TFSec-Report.xml'
         workingDirectory: "$(System.DefaultWorkingDirectory)"
-        searchFolder: '$(Build.ArtifactStagingDirectory)/TFSecReport'
+        searchFolder: '$(Build.ArtifactStagingDirectory)'
         testRunTitle: TFSec Scan
         mergeTestResults: false
         failTaskOnFailedTests: false
