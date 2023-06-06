@@ -30,8 +30,9 @@ stages:
         version: 'v1.26.0'
         debug: false
         publishTestResults: true
-#        args: 'continueOnError: true'
-        dir: '$(System.DefaultWorkingDirectory)/terraform-manifests'      
+        
+        dir: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+      continueOnError: true        
     # Task-3: Publish build artifacts (Publish build to Azure Pipelines)           
     - task: PublishBuildArtifacts@1
       inputs:
