@@ -39,7 +39,7 @@ stages:
         docker pull tfsec/tfsec:latest
         docker run --rm -v "$(pwd):/src" tfsec/tfsec ./src --format JUnit --include-passed > TFSecReport/TFSec-Report.xml
         docker run --rm -v "$(pwd):/src" tfsec/tfsec ./src
-         workingDirectory: "$(System.DefaultWorkingDirectory)"
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
       displayName: TFSec Static Code Analysis
       condition: always()
       continueOnError: true
@@ -47,7 +47,7 @@ stages:
       displayName: 'Publish Artifact: TFSec Report'
       condition: succeededOrFailed()
       inputs:
-        workingDirectory: "$(System.DefaultWorkingDirectory)"
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: TFSecReport
  # Publish the results of the TFSec analysis as Test Results to the pipeline
@@ -57,7 +57,7 @@ stages:
       inputs:
         testResultsFormat: 'JUnit' # Options JUnit, NUnit, VSTest, xUnit, cTest
         testResultsFiles: '**/*TFSec-Report.xml'
-        workingDirectory: "$(System.DefaultWorkingDirectory)"
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
         searchFolder: '$(Build.ArtifactStagingDirectory)'
         testRunTitle: TFSec Scan
         mergeTestResults: false
