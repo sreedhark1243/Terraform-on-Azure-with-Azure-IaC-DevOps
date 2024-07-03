@@ -19,7 +19,9 @@ parameters:
   - name: arguments
     displayName: the full arguments for the script to be executed
     type: string
-    default: '<-mail "user@example.com">. for Manageuser <-mail "user@example.com -enable $true or $false>'
+    default: '<-mail "user@example.com"> for all\
+              for Manageuser disable user <-mail "user@example.com -enable $false>\
+              for ManageUser enable user <-mail "user@example.com -enable $true> '
     
 
 jobs:
