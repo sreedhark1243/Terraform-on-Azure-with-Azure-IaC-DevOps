@@ -23,13 +23,15 @@ jobs:
   steps: 
   - script: |
       if [[ "${{ parameters.script }}" == 'test1' ]]; then
-        echo -e "\033[1;31mRunning script test1 with arguments: ${{ parameters.arguments }}\033[0m"
+        arguments='-mail "user@example.com" -accountEnable $true'
       elif [[ "${{ parameters.script }}" == 'test2' ]]; then
-        echo -e "\033[1;34mRunning script test2 with arguments: ${{ parameters.arguments }}\033[0m"
+        arguments='-mail "user@example.com" -status $false'
       elif [[ "${{ parameters.script }}" == 'test3' ]]; then
-        echo -e "\033[1;32mRunning script test3 with arguments: ${{ parameters.arguments }}\033[0m"
+        arguments='-mail "user@example.com"'
       else
-        echo -e "\033[1;33mUnknown script: ${{ parameters.script }}\033[0m"
+        arguments='-mail "user@example.com"'
       fi
+
+      echo -e "\033[1;31mRunning script ${{ parameters.script }} with arguments: $arguments\033[0m"
     displayName: 'Display Instructions'
 
