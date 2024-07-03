@@ -19,7 +19,7 @@ parameters:
   - name: arguments
     displayName: the full arguments for the script to be executed
     type: string
-    default: '-mail "user@example.com": when we use ManageScript use -mail "user@example.com -enable $true/$false'
+    default: '<-mail "user@example.com">. for Manageuser <-mail "user@example.com -enable $true or $false>'
     
 
 jobs:
