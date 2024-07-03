@@ -1,0 +1,28 @@
+parameters:
+  - name: script
+    type: string
+  - name: arguments
+    type: string
+    default: ''
+
+steps:
+  - ${{ if eq(parameters.script, 'test1') }}:
+    - script: echo "Setting arguments for test1"
+      displayName: 'Set arguments for test1'
+    - script: |
+        echo "##vso[task.setvariable variable=arguments]-mail \"user@example.com\" -accountEnable \$true"
+      displayName: 'Set test1 arguments'
+
+  - ${{ if eq(parameters.script, 'test2') }}:
+    - script: echo "Setting arguments for test2"
+      displayName: 'Set arguments for test2'
+    - script: |
+        echo "##vso[task.setvariable variable=arguments]-mail \"user@example.com\" -status \$false"
+      displayName: 'Set test2 arguments'
+
+  - ${{ if eq(parameters.script, 'test3') }}:
+    - script: echo "Setting arguments for test3"
+      displayName: 'Set arguments for test3'
+    - script: |
+        echo "##vso[task.setvariable variable=arguments]-mail \"user@example.com\""
+      displayName: 'Set test3 arguments'
