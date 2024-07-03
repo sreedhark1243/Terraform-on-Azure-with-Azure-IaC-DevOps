@@ -16,22 +16,17 @@ parameters:
     displayName: the full arguments for the script to be executed
     type: string
     default: '-mail "user@example.com"'
-    
+
 jobs:
 - job: Displayinstructions
   displayName: "DisplayInstructions"
-  steps: 
-  - script: |
-      if [[ "${{ parameters.script }}" == 'test1' ]]; then
-        arguments='-mail "user@example.com" -accountEnable $true'
-      elif [[ "${{ parameters.script }}" == 'test2' ]]; then
-        arguments='-mail "user@example.com" -status $false'
-      elif [[ "${{ parameters.script }}" == 'test3' ]]; then
-        arguments='-mail "user@example.com"'
-      else
-        arguments='-mail "user@example.com"'
-      fi
+  steps:
+  - template: set-arguments.yml
+    parameters:
+      script: ${{ parameters.script }}
 
-      echo -e "\033[1;31mRunning script ${{ parameters.script }} with arguments: $arguments\033[0m"
+  - script: |
+      echo -e "\033[1;31mRunning script ${{ parameters.script }} with arguments: $(arguments)\033[0m"
     displayName: 'Display Instructions'
+
 
