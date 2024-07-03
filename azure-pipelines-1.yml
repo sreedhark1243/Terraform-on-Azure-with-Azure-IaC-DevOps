@@ -1,3 +1,4 @@
+#This pipeline is to test the displayname message when we change the parameters
 name: Run general script with approval
 
 trigger: none
@@ -11,21 +12,25 @@ parameters:
       - test1
       - test2
       - test3 
+      - test4
+      - test5
+      - test6
+      - test7
+  - name: arguments
+    displayName: the full arguments for the script to be executed
+    type: string
+    default: '-mail "user@example.com"'
 
 jobs:
 - job: Displayinstructions
-  displayName: "Display Instructions"
+  displayName: "DisplayInstructions"
   steps:
-  - script: |
-      if [[ "${{ parameters.script }}" == 'test1' ]]; then
-        echo "##vso[task.setvariable variable=arguments]-mail \"user@example.com\" -accountEnable \$true"
-      elif [[ "${{ parameters.script }}" == 'test2' ]]; then
-        echo "##vso[task.setvariable variable=arguments]-mail \"user@example.com\" -status \$false"
-      elif [[ "${{ parameters.script }}" == 'test3' ]]; then
-        echo "##vso[task.setvariable variable=arguments]-mail \"user@example.com\""
-      fi
-    displayName: 'Set Arguments Based on Script'
+  - template: set-arguments.yml
+    parameters:
+      script: ${{ parameters.script }}
 
   - script: |
       echo -e "\033[1;31mRunning script ${{ parameters.script }} with arguments: $(arguments)\033[0m"
     displayName: 'Display Instructions'
+
+
