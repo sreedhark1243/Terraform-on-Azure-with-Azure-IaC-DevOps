@@ -1,0 +1,27 @@
+#This pipeline is to test the displayname message when we change the parameters
+name: Run general script with approval
+
+trigger: none
+
+parameters:
+  - name: script
+    displayName: choose which script to run
+    type: string
+    values:
+    - test1
+    - test2
+    - test3 
+  - name: arguments
+    displayName: the full arguments for the script to be executed
+    type: string
+    default: '-mail "user@example.com"'
+    
+jobs:
+ - job: Displayinstructions
+   displayName: "DisplayInstructions"
+   steps: 
+   - script: |
+      echo -e "\033[1;31mThis is a bold red message\033[0m"
+      echo -e "\033[4;32mThis is an underlined green message\033[0m"
+     
+
