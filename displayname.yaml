@@ -1,1 +1,14 @@
+trigger: none
 
+parameters:
+  - name: script
+    displayName: choose which script to run
+    type: string
+    values:
+    - test1
+    - test2
+    - test3 
+  - name: arguments
+    displayName: the full arguments for the script to be executed
+    type: string
+    default: '-mail "user@example.com"'
